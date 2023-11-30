@@ -16,7 +16,7 @@ contract Counter is ERC20, ERC20Burnable, Ownable {
     mapping(address => bool) public vipMembers;
 
     modifier onlyVip {
-        require(vipMembers[msg.sender] == true);
+        require(vipMembers[msg.sender] == true, "Not a VIP!");
 	_;
     }
 
