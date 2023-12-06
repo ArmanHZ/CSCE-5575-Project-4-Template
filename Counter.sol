@@ -17,22 +17,22 @@ contract Counter is ERC20, ERC20Burnable, Ownable {
 
     modifier onlyVip {
         require(vipMembers[msg.sender] == true, "Not a VIP!");
-	_;
+		_;
     }
 
     constructor(address initialOwner) ERC20("Emerald", "EMR") Ownable(initialOwner) {
-	price = 10;
-	supply = 100000;
-	previousPricesIndexCount = 0;
+		price = 10;
+		supply = 100000;
+		previousPricesIndexCount = 0;
     }
 
     // Only VIPs can set the price. We allow for division when setting the price for more flexible prices!
     // The index is increased once for the mapping to be accurate.
     function setPrice(uint256 numerator, uint256 denominator) public onlyVip {
-	previousPrices[previousPricesIndexCount] = price;
+		previousPrices[previousPricesIndexCount] = price;
         price = numerator/denominator;
-	previousPricesIndexCount++;
-	previousPricesIndexCount++;
+		previousPricesIndexCount++;
+		previousPricesIndexCount++;
     }
 
     // Passing any index, you can get the price that was set at that point.
@@ -56,10 +56,10 @@ contract Counter is ERC20, ERC20Burnable, Ownable {
     // Mint function that only VIPs can access.
     // We deduce the minted amount from supply, so you cannot mint if there is no supply left!
     function mint(address to, uint256 amount) public payable onlyVip {
-        require(msg.value == price);
+		require(msg.value == price, "Not enough ETH");
         _mint(to, amount);
-	supply -= amount;
-	emit Log(msg.sender, to, amount);
+		supply -= amount;
+		emit Log(msg.sender, to, amount);
     }
 
     // Contract balance to owner
@@ -71,4 +71,3 @@ contract Counter is ERC20, ERC20Burnable, Ownable {
     receive() external payable {}
     fallback() external payable {}
 }
-
