@@ -23,7 +23,6 @@ contract CounterTest is Test {
 
     // Use vm.prank with the owner's address to access onlyOwner modifiers.
     // Same with onlyVip.
-    
+
     // TODO: Rest of the tests using both assertion and fuzzing testing.
 }
-
